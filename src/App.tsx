@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+/* Screens */
+import HomeScreen from './components/screens/HomeScreen';
+import ListenLaterScreen from './components/screens/ListenLaterScreen';
 
 /* Child Components */
-import Button from './components/Button';
+import { OuterContainer } from './styles/Basic';
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button>Click me</Button>
-      </header>
-    </div>
+    <OuterContainer>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/listen-later" element={<ListenLaterScreen />} />
+        </Routes>
+      </Router>
+    </OuterContainer>
   );
 }
 
