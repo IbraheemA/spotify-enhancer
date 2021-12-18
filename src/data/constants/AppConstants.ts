@@ -1,0 +1,1 @@
+export const SPOTIFY_CLIENT_ID = '30d9745536744950a299f81ffede6111';

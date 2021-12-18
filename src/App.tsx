@@ -20,6 +20,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/listen-later" element={<ListenLaterScreen />} />
+          <Route path="/auth-callback" element={<HomeScreen />} />
         </Routes>
       </Router>
     </OuterContainer>

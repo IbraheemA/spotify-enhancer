@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "npx nodemon src/server/server.ts",
     "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -42,9 +43,48 @@
     ]
   },
   "devDependencies": {
+    "@reduxjs/toolkit": "^1.7.0",
     "@types/chrome": "^0.0.169",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/passport": "^1.0.7",
+    "@types/passport-spotify": "^2.0.1",
+    "@types/react-router-redux": "^5.0.20",
+    "@types/spotify-web-api-node": "^5.0.4",
     "@types/styled-components": "^5.1.17",
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express-session": "^1.17.2",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.1",
+    "passport-spotify": "^2.0.0",
     "react-icons": "^4.3.1",
-    "styled-components": "^5.3.3"
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "spotify-web-api-node": "^5.0.2",
+    "styled-components": "^5.3.3",
+    "ts-node": "^10.4.0"
+  },
+  "proxy": "http://localhost:8080",
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      "node_modules/",
+      "dist/",
+      "coverage/"
+    ],
+    "watch": [
+      "src/server/"
+    ],
+    "execMap": {
+      "ts": "npx ts-node",
+      "tsx": "npx ts-node"
+    },
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js,json,tsx,ts"
   }
 }
