@@ -73,13 +73,16 @@ app.get(
 
 app.get(
   '/currently-playing',
-  (req: Request, res: Response) => {
-    spotifyApi.getMyCurrentPlayingTrack().then((resp) => {
+  async (req: Request, res: Response) => {
+    try {
+      const resp = await spotifyApi.getMyCurrentPlayingTrack();
       const data = resp?.body;
       // console.log("got data:");
-      // console.log(data);
+      // console.log(resp);
       // res.send(data.item?.name);
-      res.send(data)
-    });
+      res.send(data);
+    } catch (err) {
+      res.redirect('http://localhost:3000');
+    }
   }
 );

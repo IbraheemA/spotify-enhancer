@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export default styled.button`
   &:hover {
-    padding: 12px;
+    outline-width: 5px;
+    outline-offset: -3px;
   }
   &:active {
-    padding: 10px;
+    outline-width: 0px;
   }
   font-family: Montserrat;
   font-weight: bold;
@@ -14,4 +15,7 @@ export default styled.button`
   background-color: #1DB954;
   border-radius: 40px;
   border: 0px;
+  outline-width: 0px;
+  outline-style: solid;
+  outline-color: #1DB954;
 `;

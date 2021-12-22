@@ -1,14 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 /* Reducers */
-// import oidcReducer from './oidcSlice';
+import spotifyAPIReducer from './reducers/spotifyAPISlice';
+import listenLaterReducer from './reducers/listenLaterSlice';
 
 // configure your redux store
 const store = configureStore({
   reducer: {
-    // oidc: oidcReducer,
-    // other reducers
+    spotifyAPI: spotifyAPIReducer,
+    listenLater: listenLaterReducer,
   },
+  devTools: process.env.NODE_ENV === 'development',
 });
 
 export type AppDispatch = typeof store.dispatch;
