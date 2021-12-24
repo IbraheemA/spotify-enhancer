@@ -11,7 +11,7 @@ import GetCurrentlyPlayingTrackService from '../../data/services/GetCurrentlyPla
 
 /* Selectors */
 import { getCachedTracks, getCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
-import { getBlacklistTracks } from '../../data/reducers/blacklistSlice';
+import { getBlacklistTracks, removeTrack } from '../../data/reducers/blacklistSlice';
 
 /* Actions */
 import { setCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
@@ -79,7 +79,7 @@ const BlacklistScreen = () => {
         blacklistTracksList.map((id) => {
           const track = cachedTracks[id];
           if (!track) { return null; }
-          return (<div key={id}>
+          return (<div onClick={() => dispatch(removeTrack(track))} key={id}>
             {track.name}
           </div>);
         })}

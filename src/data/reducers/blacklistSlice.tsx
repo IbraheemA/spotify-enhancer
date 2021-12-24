@@ -24,12 +24,19 @@ export const blacklistSlice = createSlice({
         state.tracks.push(action.payload.id);
       }
     },
+    removeTrack: (state, action: PayloadAction<TrackType>) => {
+      const index = state.tracks.indexOf(action.payload.id);
+      if (index !== -1) {
+        state.tracks.splice(index, 1);
+      }
+    },
   },
 });
 
 // Actions
 export const {
   addTrack,
+  removeTrack,
 } = blacklistSlice.actions;
 
 // Selectors
