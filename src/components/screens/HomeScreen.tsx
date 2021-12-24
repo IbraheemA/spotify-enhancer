@@ -18,6 +18,11 @@ const HomeScreen = () => {
       >
           Listen Later
       </div>
+      <div
+        onClick={() => navigate('/blacklist')}
+      >
+          Blacklist
+      </div>
       <a href='http://localhost:8080/login'>Login</a>
       {/* <a href='http://localhost:3000/auth/spotify'>Login</a> */}
       {/* <div

@@ -67,7 +67,3 @@ export type CurrentlyPlayingTrackType = {
   // },
   // is_playing: false
 };
-
-export type StateType = {
-  currentlyPlayingTrack?: CurrentlyPlayingTrackType,
-};

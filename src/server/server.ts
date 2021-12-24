@@ -41,6 +41,9 @@ const credentials = {
 const spotifyApi = new SpotifyWebApi(credentials);
 
 const authorizeURL = spotifyApi.createAuthorizeURL([
+    'streaming',
+    'user-read-email',
+    'user-read-private',
     'user-read-currently-playing',
 ],'');
 // console.log("authorizeURL: ");
@@ -58,15 +61,24 @@ app.get(
     const code = req.query['code'] as string;
     spotifyApi.authorizationCodeGrant(code).then((resp) => {
       const body = resp?.body;
+      const accessToken = body['access_token'];
       console.log('The token expires in ' + body['expires_in']);
-      console.log('The access token is ' + body['access_token']);
+      console.log('The access token is ' + accessToken);
       console.log('The refresh token is ' + body['refresh_token']);
 
       // Set the access token on the API object to use it in later calls
-      spotifyApi.setAccessToken(body['access_token']);
+      spotifyApi.setAccessToken(accessToken);
       spotifyApi.setRefreshToken(body['refresh_token']);
       // window.location.href = '/'
-      res.redirect('http://localhost:3000');
+      // res.cookie('access_token', accessToken, {
+      //   httpOnly: true,
+      //   sameSite: true,
+      //   secure: true,
+      //   maxAge: 3600000,
+      // });
+      res.redirect(
+        `http://localhost:3000/login-successful/${accessToken}`
+      );
     });
   }
 );
@@ -86,3 +98,12 @@ app.get(
     }
   }
 );
+
+// window.onSpotifyWebPlaybackSDKReady = () => {
+//   const token = '[My access token]';
+//   const player = new Spotify.Player({
+//     name: 'Web Playback SDK Quick Start Player',
+//     getOAuthToken: cb => { cb(token); },
+//     volume: 0.5
+//   });
+// }
