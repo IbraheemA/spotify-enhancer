@@ -7,14 +7,14 @@ import { PageContainer, Wrapper } from '../../styles/Basic';
 import ScreenNavigationHeader from '../ScreenNavigationHeader';
 
 /* Services */
-import GetCurrentlyPlayingTrackService from '../../data/services/GetCurrentlyPlayingTrackService';
+import GetCurrentlyPlayingTrackInfoService from '../../data/services/GetCurrentlyPlayingTrackInfoService';
 
 /* Selectors */
-import { getCachedTracks, getCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
+import { getCachedTracks, getCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
 import { getBlacklistTracks, removeTrack } from '../../data/reducers/blacklistSlice';
 
 /* Actions */
-import { setCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
+import { setCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
 import { addTrack } from '../../data/reducers/blacklistSlice';
 
 /* Types */
@@ -25,11 +25,11 @@ import { getPlayerInstance } from '../../data/reducers/spotifyPlayerSDKSlice';
 const BlacklistScreen = () => {
   const {
     cachedTracks,
-    currentlyPlayingTrack,
+    currentlyPlayingTrackInfo,
     blacklistTracks,
   } = useSelector((state: AppState) => ({
     cachedTracks: getCachedTracks(state),
-    currentlyPlayingTrack: getCurrentlyPlayingTrack(state),
+    currentlyPlayingTrackInfo: getCurrentlyPlayingTrackInfo(state),
     blacklistTracks: getBlacklistTracks(state),
   }));
 
@@ -38,15 +38,15 @@ const BlacklistScreen = () => {
   useEffect(() => {
     let timer : NodeJS.Timeout;
     const fetchTrack = async () => {
-      const data = await GetCurrentlyPlayingTrackService();
-      dispatch(setCurrentlyPlayingTrack(data));
+      const data = await GetCurrentlyPlayingTrackInfoService();
+      dispatch(setCurrentlyPlayingTrackInfo(data));
       timer = setTimeout(fetchTrack, 1000);
     };
     fetchTrack();
     return () => clearTimeout(timer);
   }, []);
 
-  const currentTrackText = currentlyPlayingTrack?.item?.name ?? 'None';
+  const currentTrackText = currentlyPlayingTrackInfo?.item?.name ?? 'None';
   const blacklistTracksList = Array.from(blacklistTracks);
 
   return (
@@ -63,7 +63,7 @@ const BlacklistScreen = () => {
         </div>
         <Button
           onClick={() => {
-            const item = currentlyPlayingTrack?.item;
+            const item = currentlyPlayingTrackInfo?.item;
             item && dispatch(addTrack(item));
           }}
         >

@@ -7,14 +7,14 @@ import { PageContainer, Wrapper } from '../../styles/Basic';
 import ScreenNavigationHeader from '../ScreenNavigationHeader';
 
 /* Services */
-import GetCurrentlyPlayingTrackService from '../../data/services/GetCurrentlyPlayingTrackService';
+import GetCurrentlyPlayingTrackInfoService from '../../data/services/GetCurrentlyPlayingTrackInfoService';
 
 /* Selectors */
-import { getCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
+import { getCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
 import { getListenLaterTracks } from '../../data/reducers/listenLaterSlice';
 
 /* Actions */
-import { setCurrentlyPlayingTrack } from '../../data/reducers/spotifyAPISlice';
+import { setCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
 import { addTrack } from '../../data/reducers/listenLaterSlice';
 
 /* Types */
@@ -23,10 +23,10 @@ import type { AppState } from '../../data/store';
 
 const ListenLaterScreen = () => {
   const {
-    currentlyPlayingTrack,
+    currentlyPlayingTrackInfo,
     listenLaterTracks,
   } = useSelector((state: AppState) => ({
-    currentlyPlayingTrack: getCurrentlyPlayingTrack(state),
+    currentlyPlayingTrackInfo: getCurrentlyPlayingTrackInfo(state),
     listenLaterTracks: getListenLaterTracks(state),
   }));
 
@@ -35,15 +35,15 @@ const ListenLaterScreen = () => {
   useEffect(() => {
     let timer : NodeJS.Timeout;
     const fetchTrack = async () => {
-      const data = await GetCurrentlyPlayingTrackService();
-      dispatch(setCurrentlyPlayingTrack(data));
+      const data = await GetCurrentlyPlayingTrackInfoService();
+      dispatch(setCurrentlyPlayingTrackInfo(data));
       timer = setTimeout(fetchTrack, 1000);
     };
     fetchTrack();
     return () => clearTimeout(timer);
   }, []);
 
-  const currentTrackText = currentlyPlayingTrack?.item?.name ?? 'None';
+  const currentTrackText = currentlyPlayingTrackInfo?.item?.name ?? 'None';
 
   return (
     <PageContainer justifyStartChildren>
@@ -58,7 +58,7 @@ const ListenLaterScreen = () => {
           Current track: {currentTrackText}
         </div>
         <Button
-          onClick={() => {currentlyPlayingTrack && dispatch(addTrack(currentlyPlayingTrack?.item))}}
+          onClick={() => {currentlyPlayingTrackInfo && dispatch(addTrack(currentlyPlayingTrackInfo?.item))}}
         >
           ADD
         </Button>

@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 /* Types */
 import type { AppState } from '../store';
 import type {
-  CurrentlyPlayingTrackType, TrackType,
+  CurrentlyPlayingTrackInfoType, TrackType,
 } from '../types/SpotifyAPITypes';
 import { addTrack as addBlacklistTrack } from './blacklistSlice';
 import { addTrack as addListenLaterTrack} from './listenLaterSlice';
 
 export type StateType = {
   cachedTracks: {[id: string] : TrackType},
-  currentlyPlayingTrack?: CurrentlyPlayingTrackType,
+  currentlyPlayingTrackInfo?: CurrentlyPlayingTrackInfoType,
 };
 
 const initialState: StateType = {
@@ -22,8 +22,8 @@ export const spotifyAPISlice = createSlice({
   name: 'spotifyAPI',
   initialState,
   reducers: {
-    setCurrentlyPlayingTrack: (state, action: PayloadAction<CurrentlyPlayingTrackType>) => {
-      state.currentlyPlayingTrack = action.payload;
+    setCurrentlyPlayingTrackInfo: (state, action: PayloadAction<CurrentlyPlayingTrackInfoType>) => {
+      state.currentlyPlayingTrackInfo = action.payload;
     },
     addTrackToCache: (state, action: PayloadAction<TrackType>) => {
       state.cachedTracks[action.payload.id] = action.payload;
@@ -41,13 +41,13 @@ export const spotifyAPISlice = createSlice({
 
 // Actions
 export const {
-  setCurrentlyPlayingTrack,
+  setCurrentlyPlayingTrackInfo,
   addTrackToCache,
 } = spotifyAPISlice.actions;
 
 // Selectors
-export const getCurrentlyPlayingTrack = (state: AppState) =>
-  state.spotifyAPI.currentlyPlayingTrack;
+export const getCurrentlyPlayingTrackInfo = (state: AppState) =>
+  state.spotifyAPI.currentlyPlayingTrackInfo;
 export const getCachedTracks = (state: AppState) =>
   state.spotifyAPI.cachedTracks;
 

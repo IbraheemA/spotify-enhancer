@@ -51,7 +51,7 @@ export type TrackType = {
   // uri: 'spotify:track:6UYbt0ZVXP5pnrhzk8z2d8'
 };
 
-export type CurrentlyPlayingTrackType = {
+export type CurrentlyPlayingTrackInfoType = {
   timestamp: number;
   context: null;
   progress_ms: number;
