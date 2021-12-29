@@ -47,7 +47,9 @@ const ListenLaterScreen = () => {
 
   return (
     <PageContainer justifyStartChildren>
-      <ScreenNavigationHeader />
+      <ScreenNavigationHeader
+        title='Listen Later'
+      />
       <Wrapper
         justifyCenterChildren
         height='50%'

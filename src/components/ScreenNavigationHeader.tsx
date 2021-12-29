@@ -6,7 +6,13 @@ import { IoChevronBackCircleSharp } from 'react-icons/io5';
 import Button from '../styles/Button';
 import { Row } from '../styles/Basic';
 
-const ScreenNavigationHeader = () => {
+type PropsType = {
+  title?: string,
+};
+
+const ScreenNavigationHeader = ({
+  title,
+}: PropsType) => {
   const navigate = useNavigate();
   return (
     <Row
@@ -37,6 +43,16 @@ const ScreenNavigationHeader = () => {
           color: 'white',
         }}>Go Back</span>
       </div>
+      <div style={{
+        flex: 1,
+        justifyContent: 'center',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+      }} >
+        {title}
+      </div>
+      <div style={{flex: 1}} />
     </Row>
   )
 }

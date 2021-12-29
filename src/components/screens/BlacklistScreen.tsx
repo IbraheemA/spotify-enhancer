@@ -51,7 +51,9 @@ const BlacklistScreen = () => {
 
   return (
     <PageContainer justifyStartChildren>
-      <ScreenNavigationHeader />
+      <ScreenNavigationHeader
+        title='Blacklist'
+      />
       <Wrapper
         justifyCenterChildren
         height='50%'
