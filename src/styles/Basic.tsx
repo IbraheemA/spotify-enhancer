@@ -48,6 +48,7 @@ export const Wrapper = styled.div<{
 `;
 
 export const Row = styled.div`
-  flex-direction: 'row';
-  justify-content: 'flex-start';
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;

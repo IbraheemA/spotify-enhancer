@@ -7,7 +7,7 @@ import type {
 } from '../types/SpotifyAPITypes';
 
 export type StateType = {
-  tracks: Array<TrackType>,
+  tracks: Array<string>,
 };
 
 const initialState: StateType = {
@@ -20,7 +20,15 @@ export const listenLaterSlice = createSlice({
   initialState,
   reducers: {
     addTrack: (state, action: PayloadAction<TrackType>) => {
-      state.tracks.push(action.payload);
+      if (!state.tracks.includes(action.payload.id)){
+        state.tracks.push(action.payload.id);
+      }
+    },
+    removeTrack: (state, action: PayloadAction<TrackType>) => {
+      const index = state.tracks.indexOf(action.payload.id);
+      if (index !== -1) {
+        state.tracks.splice(index, 1);
+      }
     },
   },
 });
@@ -28,6 +36,7 @@ export const listenLaterSlice = createSlice({
 // Actions
 export const {
   addTrack,
+  removeTrack,
 } = listenLaterSlice.actions;
 
 // Selectors

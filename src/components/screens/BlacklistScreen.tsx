@@ -11,11 +11,11 @@ import GetCurrentlyPlayingTrackInfoService from '../../data/services/GetCurrentl
 
 /* Selectors */
 import { getCachedTracks, getCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
-import { getBlacklistTracks, removeTrack } from '../../data/reducers/blacklistSlice';
+import { getBlacklistTracks } from '../../data/reducers/blacklistSlice';
 
 /* Actions */
 import { setCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
-import { addTrack } from '../../data/reducers/blacklistSlice';
+import { addTrack, removeTrack } from '../../data/reducers/blacklistSlice';
 
 /* Types */
 import type { AppState } from '../../data/store';
@@ -47,7 +47,6 @@ const BlacklistScreen = () => {
   }, []);
 
   const currentTrackText = currentlyPlayingTrackInfo?.item?.name ?? 'None';
-  const blacklistTracksList = Array.from(blacklistTracks);
 
   return (
     <PageContainer justifyStartChildren>
@@ -76,9 +75,9 @@ const BlacklistScreen = () => {
         scroll
         height='50%'
       >
-        {blacklistTracksList &&
-        blacklistTracksList.length !== 0 &&
-        blacklistTracksList.map((id) => {
+        {blacklistTracks &&
+        blacklistTracks.length !== 0 &&
+        blacklistTracks.map((id) => {
           const track = cachedTracks[id];
           if (!track) { return null; }
           return (<div onClick={() => dispatch(removeTrack(track))} key={id}>

@@ -10,12 +10,12 @@ import ScreenNavigationHeader from '../ScreenNavigationHeader';
 import GetCurrentlyPlayingTrackInfoService from '../../data/services/GetCurrentlyPlayingTrackInfoService';
 
 /* Selectors */
-import { getCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
+import { getCachedTracks, getCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
 import { getListenLaterTracks } from '../../data/reducers/listenLaterSlice';
 
 /* Actions */
 import { setCurrentlyPlayingTrackInfo } from '../../data/reducers/spotifyAPISlice';
-import { addTrack } from '../../data/reducers/listenLaterSlice';
+import { addTrack, removeTrack } from '../../data/reducers/listenLaterSlice';
 
 /* Types */
 import type { AppState } from '../../data/store';
@@ -23,9 +23,11 @@ import type { AppState } from '../../data/store';
 
 const ListenLaterScreen = () => {
   const {
+    cachedTracks,
     currentlyPlayingTrackInfo,
     listenLaterTracks,
   } = useSelector((state: AppState) => ({
+    cachedTracks: getCachedTracks(state),
     currentlyPlayingTrackInfo: getCurrentlyPlayingTrackInfo(state),
     listenLaterTracks: getListenLaterTracks(state),
   }));
@@ -69,9 +71,15 @@ const ListenLaterScreen = () => {
         scroll
         height='50%'
       >
-        {listenLaterTracks && listenLaterTracks.length !== 0 && listenLaterTracks.map((track) => (<div>
-          {track.name}
-        </div>))}
+        {listenLaterTracks &&
+        listenLaterTracks.length !== 0 &&
+        listenLaterTracks.map((id) => {
+          const track = cachedTracks[id];
+          if (!track) { return null; }
+          return (<div onClick={() => dispatch(removeTrack(track))} key={id}>
+            {track.name}
+          </div>);
+        })}
       </Wrapper>
     </PageContainer>
   )
