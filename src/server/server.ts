@@ -107,3 +107,25 @@ app.get(
 //     volume: 0.5
 //   });
 // }
+
+app.post(
+  '/transfer-playback',
+  async (req: Request, res: Response) => {
+    try {
+      const deviceID = req.query['deviceID'] as string;
+      console.log("trying to connect deviceID", deviceID)
+      spotifyApi.transferMyPlayback([deviceID])
+        .then(resp => {
+          res.status(200).send();
+          return;
+        })
+        .catch(err => {
+          console.error(err);
+        })
+      res.status(400).send();
+    } catch (err) {
+      console.error(err);
+      res.status(400).send();
+    }
+  }
+);

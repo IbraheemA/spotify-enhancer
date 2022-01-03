@@ -6,7 +6,7 @@ export const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 600px;
   height: 400px;
   background-color: #222326;

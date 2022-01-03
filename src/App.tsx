@@ -6,21 +6,24 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import BlacklistScreen from './components/screens/BlacklistScreen';
 
 /* Screens */
 import HomeScreen from './components/screens/HomeScreen';
 import ListenLaterScreen from './components/screens/ListenLaterScreen';
 import LoginSuccessScreen from './components/screens/LoginSuccessScreen';
+import BlacklistScreen from './components/screens/BlacklistScreen';
 
 /* Child Components */
 import { OuterContainer } from './styles/Basic';
+import PlayerControlBar from './components/PlayerControlBar';
 
 /* Selectors */
 import { getBlacklistTracks } from './data/reducers/blacklistSlice';
+import { getDeviceID } from './data/reducers/spotifyPlayerSDKSlice';
 
 /* Types */
 import type { AppState } from './data/store';
+import axios from 'axios';
 
 
 const App = () => {
@@ -28,8 +31,10 @@ const App = () => {
 
   const {
     blacklistTracks,
+    deviceID,
   } = useSelector((state: AppState) => ({
     blacklistTracks: getBlacklistTracks(state),
+    deviceID: getDeviceID(state),
   }));
   const blacklistTracksRef = useRef<Array<string>>([]);
 
@@ -69,18 +74,33 @@ const App = () => {
     blacklistTracksRef.current = blacklistTracks;
   }, [blacklistTracks]);
 
+  useEffect(() => {
+    if (!deviceID) { return; }
+    axios.post('/transfer-playback', null, {
+      params: {
+        deviceID,
+      }
+    }).then(resp => {
+      console.log('successful transfer');
+      console.log(resp);
+    })
+  }, [deviceID]);
+
   return (
     <OuterContainer>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/login-successful/:accessToken" element={
-            <LoginSuccessScreen setSpotifyPlayer={setSpotifyPlayer}/>}
-          />
-          <Route path="/listen-later" element={<ListenLaterScreen />} />
-          <Route path="/blacklist" element={<BlacklistScreen/>} />
-        </Routes>
-      </Router>
+      <div style={{flex: 1}}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/login-successful/:accessToken" element={
+              <LoginSuccessScreen setSpotifyPlayer={setSpotifyPlayer}/>}
+            />
+            <Route path="/listen-later" element={<ListenLaterScreen />} />
+            <Route path="/blacklist" element={<BlacklistScreen/>} />
+          </Routes>
+        </Router>
+      </div>
+      <PlayerControlBar spotifyPlayer={spotifyPlayer} />
     </OuterContainer>
   );
 }

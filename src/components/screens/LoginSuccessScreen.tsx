@@ -7,7 +7,7 @@ import Button from '../../styles/Button';
 import { PageContainer } from '../../styles/Basic';
 
 /* Selectors */
-import { setDeviceID, setInstance } from '../../data/reducers/spotifyPlayerSDKSlice';
+import { setDeviceID } from '../../data/reducers/spotifyPlayerSDKSlice';
 import { getBlacklistTracks } from '../../data/reducers/blacklistSlice';
 
 /* Actions */
@@ -16,6 +16,7 @@ import { setPlaybackState } from '../../data/reducers/spotifyPlayerSDKSlice';
 /* Types */
 import type { AppState } from '../../data/store';
 import { logStateChange } from '../../utils/spotifyPlayerListeners';
+import axios from 'axios';
 
 type PropsType = {
   setSpotifyPlayer: (p: Spotify.Player) => void,
@@ -59,7 +60,7 @@ const LoginSuccessScreen = ({
 
               spotifyPlayer.addListener('player_state_changed',
                 (state: Spotify.PlaybackState) => {
-                  state && setPlaybackState(state);
+                  state && dispatch(setPlaybackState(state));
                 }
               );
               

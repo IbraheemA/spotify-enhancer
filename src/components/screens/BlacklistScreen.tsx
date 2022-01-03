@@ -19,7 +19,6 @@ import { addTrack, removeTrack } from '../../data/reducers/blacklistSlice';
 
 /* Types */
 import type { AppState } from '../../data/store';
-import { getPlayerInstance } from '../../data/reducers/spotifyPlayerSDKSlice';
 
 
 const BlacklistScreen = () => {
@@ -80,7 +79,14 @@ const BlacklistScreen = () => {
         blacklistTracks.map((id) => {
           const track = cachedTracks[id];
           if (!track) { return null; }
-          return (<div onClick={() => dispatch(removeTrack(track))} key={id}>
+          return (
+            <div
+              onClick={() => dispatch(removeTrack(track))}
+              style={{
+                cursor: 'pointer',
+              }}
+              key={id}
+            >
             {track.name}
           </div>);
         })}
