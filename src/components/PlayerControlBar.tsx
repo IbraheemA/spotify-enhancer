@@ -78,6 +78,7 @@ const PlayerControlBar = ({
         style={{
           height: 5,
           backgroundColor: 'white',
+          cursor: 'pointer',
         }}
         onClick={onClickSeekBar}
       >
@@ -171,6 +172,9 @@ const PlayerControlBar = ({
             <IoPlaySkipBackSharp
               color='grey'
               size={15}
+              style={{
+                cursor: 'pointer',
+              }}
               onClick={() => {
                 spotifyPlayer?.previousTrack();
               }}
@@ -181,7 +185,8 @@ const PlayerControlBar = ({
                 color='white'
                 size={40}
                 style={{
-                  margin: '0 10'
+                  margin: '0 10',
+                  cursor: 'pointer',
                 }}
                 onClick={() => {
                   dispatch(setIsPaused(false));
@@ -193,7 +198,8 @@ const PlayerControlBar = ({
                 color='white'
                 size={40}
                 style={{
-                  margin: '0 10'
+                  margin: '0 10',
+                  cursor: 'pointer',
                 }}
                 onClick={() => {
                   dispatch(setIsPaused(true));
@@ -204,6 +210,9 @@ const PlayerControlBar = ({
             <IoPlaySkipForwardSharp
               color='grey'
               size={15}
+              style={{
+                cursor: 'pointer',
+              }}
               onClick={() => {
                 spotifyPlayer?.nextTrack();
               }}
